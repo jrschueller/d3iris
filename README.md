@@ -1,3 +1,3 @@
-# d3npm
+# d3iris
 
-use this as a template for d3 projects (possibly (maybe (not sure (we'll see))))
+d3 visualizations of the iris dataset
