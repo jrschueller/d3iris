@@ -23,6 +23,7 @@ const xValue = (d) => d.petal_length;
 const yValue = (d) => d.sepal_length;
 
 const margin = { top: 50, right: 50, bottom: 100, left: 100 };
+const radius = 5;
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -58,7 +59,7 @@ const main = async () => {
     .join("circle")
     .attr("cx", (d) => d.x)
     .attr("cy", (d) => d.y)
-    .attr("r", 5);
+    .attr("r", radius);
 
   // the 'g' syntax is adding an SVG group element onto the prior instantiation of the svg
   // the `backtick` syntax is an ES6 string literal that will take the inner argument and apply it
