@@ -1,8 +1,4 @@
-import {
-  csv,
-  select,
-  selectAll
-} from 'd3';
+import { csv, select } from "d3";
 import { scatterPlot } from "./scatterPlot.js";
 
 const csvUrl =
@@ -14,15 +10,9 @@ const parseRow = (d) => {
   d.sepal_width = +d.sepal_width;
   d.petal_length = +d.petal_length;
   d.petal_width = +d.petal_width;
-  d.species = +d.species;
+  d.species = d.species;
   return d;
 };
-
-// const xValue = (d) => d.petal_length;
-// const yValue = (d) => d.sepal_length;
-
-// const margin = { top: 50, right: 50, bottom: 100, left: 100 };
-// const radius = 5;
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -35,6 +25,8 @@ const svg = select("body")
 const main = async () => {
   const data = await csv(csvUrl, parseRow);
 
+  console.log(data); 
+  
   svg.call(
     scatterPlot()
       .width(width)
@@ -42,9 +34,16 @@ const main = async () => {
       .data(data)
       .xValue((d) => d.petal_length)
       .yValue((d) => d.sepal_length)
-      .margin({ top: 50, right: 50, bottom: 100, left: 100 })
-      .radius(5)
-  );
+      .colorValue((d) => d.species)
+      .margin({
+        top: 50,
+        right: 50,
+        bottom: 100,
+        left: 100,
+      })
+      .size(8),
+  );  
 };
 
 main();
+
