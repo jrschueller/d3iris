@@ -2,17 +2,16 @@ import {
   scaleLinear,
   extent,
   axisLeft,
-  axisBottom
+  axisBottom,
+  schemeTableau10,
+  scaleOrdinal,
 } from "d3";
 
 export const scatterPlot = () => {
-  
-  let width, height, data, xValue, yValue, margin, radius;
+  let width, height, data, xValue, yValue, margin, size, colorValue;
 
   const my = (selection) => {
-
     const x = scaleLinear()
-      // d3.extent finds max and min... if you want to start at zero or end beyond the max, be explicit
       .domain(extent(data, xValue))
       .range([margin.left, width - margin.right]);
 
@@ -20,21 +19,13 @@ export const scatterPlot = () => {
       .domain(extent(data, yValue))
       .range([height - margin.bottom, margin.top]);
 
+    //const colorScale = scaleOrdinal(schemeTableau10).domain(d);
+
     const marks = data.map((d) => ({
       x: x(xValue(d)),
       y: y(yValue(d)),
     }));
 
-    selection
-      .selectAll("circle")
-      .data(marks)
-      .join("circle")
-      .attr("cx", (d) => d.x)
-      .attr("cy", (d) => d.y)
-      .attr("r", radius);
-
-    // the 'g' syntax is adding an selection group element onto the prior instantiation of the selection
-    // the `backtick` syntax is an ES6 string literal that will take the inner argument and apply it
     selection
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
@@ -44,6 +35,23 @@ export const scatterPlot = () => {
       .append("g")
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(axisBottom(x));
+    
+    // selection.call(colorLegend, {
+    //   colorScale,
+    //   colorLegendLabel,
+    //   colorLegendX,
+    //   colorLegendY,
+    //   });
+
+    selection
+      .append("g")
+      .selectAll("circle")
+      .data(marks)
+      .join("circle")
+      .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
+      .attr('r', size)
+      //.attr('fill', d => colorScale(colorValue(d)))
+      ;
   };
 
   my.width = function (_) {
@@ -66,8 +74,12 @@ export const scatterPlot = () => {
     return arguments.length ? ((margin = _), my) : margin;
   };
 
-  my.radius = function (_) {
-    return arguments.length ? ((radius = +_), my) : radius;
+  my.size = function (_) {
+    return arguments.length ? ((size = +_), my) : size;
+  };
+
+  my.colorValue = function (_) {
+    return arguments.length ? ((colorValue = _), my) : colorValue;
   };
 
   my.data = function (_) {
