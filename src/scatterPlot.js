@@ -19,11 +19,19 @@ export const scatterPlot = () => {
       .domain(extent(data, yValue))
       .range([height - margin.bottom, margin.top]);
 
-    //const colorScale = scaleOrdinal(schemeTableau10).domain(d);
+    // Automatically determine the unique species in the dataset
+    // const speciesDomain = [...new Set(data.map(colorValue))];
+    const speciesDomainMap = data.map(d => d.colorValue);
 
+    // Use d3's schemeTableau10 for colors, which provides 10 different colors
+    const colorScale = scaleOrdinal(schemeTableau10)
+      .domain(speciesDomainMap);
+
+    // Creating marks including colorValue
     const marks = data.map((d) => ({
       x: x(xValue(d)),
       y: y(yValue(d)),
+      species: colorValue(d),  // Include species in the marks
     }));
 
     selection
@@ -35,24 +43,18 @@ export const scatterPlot = () => {
       .append("g")
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(axisBottom(x));
-    
-    // selection.call(colorLegend, {
-    //   colorScale,
-    //   colorLegendLabel,
-    //   colorLegendX,
-    //   colorLegendY,
-    //   });
 
+    // Draw circles
     selection
-      .append("g")
-      .selectAll("circle")
-      .data(marks)
-      .join("circle")
-      .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
-      .attr('r', size)
-      //.attr('fill', d => colorScale(colorValue(d)))
-      ;
-  };
+    .append("g")
+    .selectAll("circle")
+    .data(marks)
+    .join("circle")
+    .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
+    .attr("r", size)
+    .attr("fill", d => colorScale(d.species));  // Apply the correct color
+
+    };
 
   my.width = function (_) {
     return arguments.length ? ((width = +_), my) : width;
@@ -87,4 +89,5 @@ export const scatterPlot = () => {
   };
 
   return my;
+  
 };
