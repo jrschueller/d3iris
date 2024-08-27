@@ -25,7 +25,7 @@ const svg = select("body")
 const main = async () => {
   const data = await csv(csvUrl, parseRow);
 
-  console.log(data); 
+  //console.log(data); 
   
   svg.call(
     scatterPlot()
@@ -36,15 +36,23 @@ const main = async () => {
       .yValue((d) => d.sepal_length)
       .colorValue((d) => d.species)
       .margin({
-        top: 50,
-        right: 50,
-        bottom: 100,
-        left: 100,
+        top: 100,
+        right: 75,
+        bottom: 150,
+        left: 125,
       })
       .size(8)
       .xAxisLabel('petal length')
       .yAxisLabel('sepal length')
-    );
+      .title('Slips, trips, and falls account for 80 percent of all accidents')
+      .subtitle('Improvements to safety checklists are likely to reduce incidents')
+      .footnote('Source: data was acquired in the most painstaking fashion imaginable')
+    ).append('image')
+    .attr('xlink:href', 'https://www.holmesmurphy.com/wp-content/themes/holmes-murphy/resources/images/hm_logo--vertical.svg')  // can also add svg file here
+    .attr('x', 0.9*width)
+    .attr('y', 0.9*height)
+    .attr('width', 0.075*width)
+    .attr('height', 0.075*height);
 
 };
 

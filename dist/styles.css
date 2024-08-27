@@ -1,51 +1,68 @@
 @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Forum&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+:root {
+  --font-fam-serif: 'Crimson Pro';
+  --font-fam-sans: 'Noto Sans Display';
+  --font-fam-axes: 'Noto Sans Mono';
+  --font-fam-ticks: 'Atkinson Hyperlegible'
+}
+
+/* 'Atkinson Hyperlegible',
+'Noto Sans Display,
+'Noto Sans Mono',
+'Spectral',
+'Crimson Pro'
+'*/
 
 body {
   margin: 0;
   overflow: hidden;
 }
 
-.tick text {
-  font-family: 'Atkinson Hyperlegible', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+.title {
+  font-family: var(--font-fam-serif);
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.subtitle {
+  font-family: var(--font-fam-sans);
   font-style: normal;
   font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.footnote {
+  font-family: var(--font-fam-sans);
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.tick text {
+  font-family: var(--font-fam-ticks);
+  font-style: normal;
+  font-size: 16px;
 }
 
 .x-axis-label {
-  font-family: 'Atkinson Hyperlegible', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  font-family: var(--font-fam-axes);
   font-style: normal;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .y-axis-label {
-  font-family: 'Atkinson Hyperlegible', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
-  font-style: italic;
+  font-family: var(--font-fam-axes);
+  font-style: normal;
   font-size: 18px;
-  font-weight: 500;
-  text-decoration: underline;
-}
-
-.atkinson-hyperlegible-regular {
-  font-family: "Atkinson Hyperlegible", sans-serif;
   font-weight: 400;
-  font-style: normal;
-}
-
-.atkinson-hyperlegible-bold {
-  font-family: "Atkinson Hyperlegible", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.atkinson-hyperlegible-regular-italic {
-  font-family: "Atkinson Hyperlegible", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.atkinson-hyperlegible-bold-italic {
-  font-family: "Atkinson Hyperlegible", sans-serif;
-  font-weight: 700;
-  font-style: italic;
 }

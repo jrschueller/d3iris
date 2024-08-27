@@ -8,7 +8,7 @@ import {
 } from "d3";
 
 export const scatterPlot = () => {
-  let width, height, data, xValue, yValue, margin, size, colorValue, xAxisLabel, yAxisLabel;
+  let width, height, data, xValue, yValue, margin, size, colorValue, xAxisLabel, yAxisLabel, title, subtitle, footnote;
 
   const my = (selection) => {
     const x = scaleLinear()
@@ -33,6 +33,52 @@ export const scatterPlot = () => {
       species: colorValue(d), // Include species in the marks
     }));
 
+    // x label
+    selection
+      .append("text")
+      .attr("class", "x-axis-label")
+      .attr("text-anchor", "middle")
+      .attr("x", width / 2)
+      .attr("y", height - (0.5*margin.bottom))
+      .text(xAxisLabel);
+
+    // y label
+    selection
+      .append("text")
+      .attr("class", "y-axis-label")
+      .attr("text-anchor", "middle")
+      .attr("transform", `translate(${margin.left / 2}, ${height / 2}) rotate(-90)`)  // Position and rotate
+      .attr("y", -margin.left / (0.25*margin.right))
+      .attr("x", -margin.right + margin.top)
+      .text(yAxisLabel);
+
+    // add a title
+    selection
+      .append("text")
+      .attr('class', 'title')
+      .attr("x", margin.left - (0.5*margin.left))
+      .attr("y", margin.top - (0.5*margin.top))
+      .attr("text-anchor", "left")
+      .text(title);
+
+    // add a subtitle
+    selection
+      .append("text")
+      .attr('class', 'subtitle')
+      .attr("x", margin.left - (0.5*margin.left))
+      .attr("y", margin.top - (0.2*margin.top))
+      .attr("text-anchor", "left")
+      .text(subtitle);
+
+    // add a footnote
+      selection
+      .append("text")
+      .attr('class', 'footnote')
+      .attr("x", margin.left - (0.5*margin.left))
+      .attr("y", height - (0.2*margin.bottom))
+      .attr("text-anchor", "left")
+      .text(footnote);
+
     selection
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
@@ -43,27 +89,6 @@ export const scatterPlot = () => {
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(axisBottom(x));
 
-    // x label
-    selection
-      .append("text")  // Append a text element
-      .attr("class", "x-axis-label")
-      .attr("text-anchor", "middle")
-      .attr("x", width / 2)  // Center it horizontally
-      .attr("y", height - margin.bottom / 4)  // Adjust vertical position as needed
-      .text(xAxisLabel);
-
-    // y label
-    selection
-      .append("text")
-      .attr("class", "y-axis-label")
-      .attr("text-anchor", "middle")
-      .attr("transform", `translate(${margin.left / 2}, ${height / 2}) rotate(-90)`)  // Position and rotate
-      //.attr("y", -margin.top / 2)
-      //.attr("x", -margin.right + margin.top)
-      .attr("y", -margin.left / 4)
-      .attr("x", -margin.right + margin.top)
-      .text(yAxisLabel);
-
     // draw circles
     selection
       .append("g")
@@ -72,7 +97,8 @@ export const scatterPlot = () => {
       .join("circle")
       .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
       .attr("r", size)
-      .attr("fill", (d) => colorScale(d.species)); // Apply the correct color
+      .attr("fill", (d) => colorScale(d.species));
+
   };
 
   my.width = function (_) {
@@ -111,9 +137,22 @@ export const scatterPlot = () => {
     return arguments.length ? ((yAxisLabel = _), my) : yAxisLabel;
   };
 
+  my.title = function (_) {
+    return arguments.length ? ((title = _), my) : title;
+  };
+
+  my.subtitle = function (_) {
+    return arguments.length ? ((subtitle = _), my) : subtitle;
+  };
+
+  my.footnote = function (_) {
+    return arguments.length ? ((footnote = _), my) : footnote;
+  };
+
   my.data = function (_) {
     return arguments.length ? ((data = _), my) : data;
   };
 
   return my;
+
 };
