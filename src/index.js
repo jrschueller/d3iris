@@ -41,8 +41,11 @@ const main = async () => {
         bottom: 100,
         left: 100,
       })
-      .size(8),
-  );  
+      .size(8)
+      .xAxisLabel('petal length')
+      .yAxisLabel('sepal length')
+    );
+
 };
 
 main();
